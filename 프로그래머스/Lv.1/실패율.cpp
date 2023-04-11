@@ -8,18 +8,27 @@ vector<int> solution(int N, vector<int> stages) {
     int num;
     int zeroCheck;
     double fail;
-    double clear = stages.size();
+    double player;
     double min;
     vector<double> clearPer;
     vector<int> answer;
 
     for (int s = 1; s <= N; s++) {
         fail = 0;
+        player = 0;
         for (int i = 0; i < stages.size(); i++) {
-            if (s == stages[i]) fail++;
+            if (s < stages[i]) player++;
+            else if( s == stages[i]){
+                player++;
+                fail++;
+            }
         }
-        clearPer.push_back(fail / clear);
-        clear -= fail;
+        if(player == 0){
+            clearPer.push_back(0);
+        }
+        else{
+            clearPer.push_back(fail / player);
+        }
     }
 
     for (int i = 1; i <= N; i++) {
@@ -39,6 +48,6 @@ vector<int> solution(int N, vector<int> stages) {
 
 int main() {
 
-    solution(3, { 3,3,2,2,1,1 });
-    //solution(4, { 4,4,4,4,4 });
+    //solution(5, { 2, 1, 2, 6, 2, 4, 3, 3 });
+    solution(5, { 3,3,3 });
 }
